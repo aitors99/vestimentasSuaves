@@ -1,0 +1,23 @@
+{
+  "name": "vestimentassuaves",
+  "version": "1.0.0",
+  "description": "API REST tienda de ropa",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aitors99/vestimentasSuaves.git"
+  },
+  "author": "ars115@alu.ua.es",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aitors99/vestimentasSuaves/issues"
+  },
+  "homepage": "https://github.com/aitors99/vestimentasSuaves#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
