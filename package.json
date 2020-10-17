@@ -18,6 +18,8 @@
   "homepage": "https://github.com/aitors99/vestimentasSuaves#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.29.1"
   }
 }
