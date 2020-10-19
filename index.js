@@ -10,6 +10,10 @@ var jwt = require("jwt-simple")
 
 var moment = require('moment')
 
+// getting-started.js
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
+
 var lista = new Map()
 var users = new Map()
 
@@ -17,21 +21,114 @@ var idActual = 3
 
 var secret = "123456"
 
+
+
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'vestimentas.suaves',
+    pass: 'adi-2020'
+  }
+});
+
+
+
 app.post('/login', async function(pet, resp){
     var datos = pet.body
     
     //TODO: cambiar esto por código que genere y envíe un JWT 
     var token = jwt.encode({login:datos.login}, secret)
     resp.send({mensaje:"OK", token:token})
+    console.log("Credenciales válidas")
     
 })
 
 app.post('/register', async function(pet, resp){
+    var nick = pet.body.nick
+    var email = pet.body.email
     var nombre = pet.body.nombre
     var password = pet.body.password
+    var apellidos = pet.body.apellidos
+    var direccion = pet.body.direccion
+    var telefono = pet.body.telefono
     
-    users.set(nombre, password)
-    resp.send("Usuario creado")
+    if(nick&&email&&nombre&&password&&apellidos&&direccion&&telefono){
+        var obj = {id:nick, email:email, nombre:nombre, password:password, apellidos:apellidos, direccion:direccion, telefono:telefono}
+        users.set(nick, obj)
+        resp.send("Usuario creado")
+
+        console.log("Usuario: " + email + " creado")
+
+        var mailOptions = {
+            from: 'vestimentas.suaves@gmail.com',
+            to: email,
+            subject: 'Usuario creado con éxito',
+            text: 'Hola ' + nombre + ', tu usario ha sido creado correctamente. Accede con tu nick (' + nick + ') y tu contraseña. Un saludo y muchas gracias.'
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+            console.log(error);
+            } else {
+            console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    
+    
+})
+
+function isString(x) {
+    return Object.prototype.toString.call(x) === "[object String]"
+  }
+
+app.get('/users/:id',chequeaJWT, function(pet, resp){
+    var id = pet.params.id
+    console.log(id)
+    if (!isString(id)) {
+        resp.status(400)
+        resp.send({mensaje:"El dato debe ser numérico"})
+    }
+    else{
+        var dato = users.get(id)
+        if (dato){
+            resp.status(200)
+            resp.send(dato)
+            console.log("Usuario " + dato.id)
+        }
+        else{
+            resp.status(404)
+            resp.send({mensaje: "Error: no esta en la lista"})
+        }
+       
+    }
+})
+
+app.put('/users',chequeaJWT, async function(pet, resp){
+    var nick = pet.body.nick
+    var email = pet.body.email
+    var nombre = pet.body.nombre
+    var password = pet.body.password
+    var apellidos = pet.body.apellidos
+    var direccion = pet.body.direccion
+    var telefono = pet.body.telefono
+    
+    if(nick&&email&&nombre&&password&&apellidos&&direccion&&telefono){
+        var obj = {id:nick, email:email, nombre:nombre, password:password, apellidos:apellidos, direccion:direccion, telefono:telefono}
+        users.delete(nick)
+        users.set(nick, obj)
+        resp.send("Usuario modificado")
+
+        console.log("Usuario: " + nick + " creado")
+    }else{
+        resp.status(400)
+        resp.send({mensaje:"falta algún campo"})
+    }
+    
+
+    
     
 })
 
@@ -57,6 +154,7 @@ function chequeaJWT(pet, resp, next) {
     if (tokenOK) {
         //Al llamar a next, el middleware "deja pasar" a la petición
         //llamando al siguiente middleware
+        console.log("Usuario autorizado")
         next()
     }
     else {
@@ -65,10 +163,12 @@ function chequeaJWT(pet, resp, next) {
     }
 }
 
+
 app.get('/products', function(pet, resp){
     resp.status(200)
     var datos = Array.from(lista.values())
     resp.send(datos)
+    console.log("Productos listados")
 })
 
 app.get('/products/:id',chequeaJWT, function(pet, resp){
@@ -82,6 +182,7 @@ app.get('/products/:id',chequeaJWT, function(pet, resp){
         if (dato){
             resp.status(200)
             resp.send(dato)
+            console.log("Producto " + dato.nombre)
         }
         else{
             resp.status(404)
@@ -102,8 +203,8 @@ app.post('/products', chequeaJWT, function(pet, resp){
         lista.set(idActual, obj)
         resp.status(201)
         resp.setHeader('Location', 'http://localhost:3000/products/'+idActual)
-        idActual++
         resp.send("Objeto creado")
+        console.log("Nuevo producto " + nombre)
     }
     else{
         resp.status(400)
@@ -123,6 +224,7 @@ app.delete('/products/:id', chequeaJWT, function(pet, resp){
             lista.delete(id)
             resp.status(200)
             resp.send(dato)
+            console.log("Producto borrado " + dato.nombre)
         }
         else{
             resp.status(404)
@@ -145,7 +247,8 @@ app.put('/products', chequeaJWT, function(pet, resp){
         resp.status(201)
         resp.setHeader('Location', 'http://localhost:3000/products/'+idActual)
         idActual++
-        resp.send("Objeto creado")
+        resp.send("Producto modificado")
+        console.log("Producto modificado " + nombre)
     }
     else{
         resp.status(400)
