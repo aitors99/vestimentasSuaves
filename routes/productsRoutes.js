@@ -14,31 +14,37 @@ function isString(x) {
   }
 
 router.get('/products', async function(pet, resp){
-    const datos = await productService.readProducts()
-    resp.status(200)
-    resp.send(datos)
-    console.log("Productos listados")
+    try{
+        const datos = await productService.readProducts()
+        resp.status(200)
+        resp.send(datos)
+    }catch(err){
+        resp.status(500).send({message:err.message})
+    }
+    
 })
 
 router.get('/products/:id',chequeaJWT, async function(pet, resp){
     var id = pet.params.id
     if (!isString(id)) {
         resp.status(400)
-        resp.send({mensaje:"El dato debe ser numérico"})
+        resp.send({mensaje:"Error: El nick debe ser una cadena de caracteres"})
     }
     else{
-        const datos = await productService.readProduct(id)
+        try{
+            const datos = await productService.readProduct(id)
         
-        if (datos){
-            resp.status(200)
-            resp.send(datos)
-            console.log("Producto " + datos.nombre)
+            if (datos.length!=0){
+                resp.status(200)
+                resp.send(datos)
+            }
+            else{
+                resp.status(404)
+                resp.send({mensaje: "Error: No esta en la lista"})
+            }
+        }catch(err){
+            resp.status(500).send({message:err.message})
         }
-        else{
-            resp.status(404)
-            resp.send({mensaje: "Error: no esta en la lista"})
-        }
-       
     }
 })
 
@@ -54,20 +60,19 @@ router.post('/products', chequeaJWT,async function(pet, resp){
 
         try {
             const product = await productService.createProduct(nombre, precio, talla, color, marca)
-            console.log("Nuevo producto " + nombre)
             resp.status(201)
             resp.setHeader('Location', 'http://localhost:3000/products/'+product._id)
-            resp.send(product);
+            resp.send(product)
             
         }catch(err){
             resp.status(500)
-            resp.send({mensaje:"No se ha introducido"})
+            resp.send({message:err.message})
         }
         
     }
     else{
         resp.status(400)
-        resp.send({mensaje:"falta algún campo"})
+        resp.send({mensaje:"Error: Falta algún campo: nombre, precio, talla, color o marca"})
     }
 })
 
@@ -79,11 +84,9 @@ router.delete('/products/:id', chequeaJWT, async function(pet, resp){
     }
     else{
         try{
-            var dato = await productService.deleteProduct(id)
-            if (dato){
-                resp.status(200)
-                resp.send(dato)
-                console.log("Producto borrado " + dato.nombre)
+            const product = await productService.deleteProduct(id)
+            if (product.length!=0){
+                resp.status(204)
             }
             else{
                 resp.status(404)
@@ -91,7 +94,7 @@ router.delete('/products/:id', chequeaJWT, async function(pet, resp){
             }
         }catch(err){
             resp.status(500)
-            resp.send(err)
+            resp.send({message:err.message})
         }
     }
 })
@@ -101,23 +104,27 @@ router.put('/products/:id', chequeaJWT, async function(pet, resp){
     var precio = pet.body.precio
     var tallas = pet.body.tallas
     var colores = pet.body.colores
-    var marca = pet.body.marca
+    var marca = pet.body.marca4
     var id = pet.params.id
     if(nombre&&precio&&tallas&&colores&&marca&&id){
         try{
-            var datos = await productService.modifyProduct(id, pet.body)
-            resp.status(201)
-            resp.setHeader('Location', 'http://localhost:3000/products/'+id)
-            resp.send(datos)
-            console.log("Producto modificado " + nombre)
+            const product = await productService.modifyProduct(id, pet.body)
+            if(product.length!=0){
+                resp.status(204)
+                resp.setHeader('Location', 'http://localhost:3000/products/'+id)
+                resp.send(product)
+            }else{
+                resp.status(404)
+                resp.send({mensaje: "Error: no esta en la lista"})
+            }
         }catch(err){
             resp.status(500)
-            resp.send(err)
+            resp.send({message:err.message})
         }
     }
     else{
         resp.status(400)
-        resp.send({mensaje:"falta algún campo"})
+        resp.send({mensaje:"Error: Falta algún campo: nombre, precio, talla, color o marca"})
     }
 })
 

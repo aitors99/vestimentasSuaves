@@ -18,7 +18,7 @@ const productService = {
             const products = await productModel.findById(id)
             return products
         }catch(err){
-            throw new Error("Error: No se ha podido listar el producto")
+            throw new Error("Error: El producto no está en la lista")
         }
     },
 

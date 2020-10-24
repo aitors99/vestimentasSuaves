@@ -5,13 +5,11 @@ const userModel = require('../models/user')
 
 const userService = {
 
-    getPassword: async function (id, pass){
+    getPassword: async function (id){
     
         try{
-            var password = await userModel.findById(id).password
-            if(password === pass) return true
-            else return false
-            
+            const user = await userModel.findById(id)
+            return user
         }catch(err){
             throw new Error("Error: No se ha podido recuperar la contraseña")
         }
@@ -38,6 +36,8 @@ const userService = {
     },
 
     updateUser: async function(id, body){
+        console.log(id)
+        console.log(body)
         try{
             const user = await userModel.findByIdAndUpdate(id, body, {new:true})
             return user

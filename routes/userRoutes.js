@@ -25,23 +25,16 @@ router.post('/login',  async function(pet, resp){
     var datos = pet.body
     
     try{
-        
-       var credentials = userService.getPassword(pet.body.id, pet.body.password)
-        
+       const user = await userService.getPassword(datos.login)
 
-        if(credentials){
-            //TODO: cambiar esto por código que genere y envíe un JWT 
-
+        if(datos.password === user.password){
             var token = jwt.encode({login:datos.login}, secret)
             resp.send({mensaje:"OK", token:token})
-            console.log("Credenciales válidas")
         }else{
-            resp.send({mensaje:"Credenciales inválidas"})
-            console.log("Credenciales inválidas")
+            resp.status(401).send({mensaje:"Credenciales inválidas"})
         }
     }catch(err){
-        resp.send({mensaje:err})
-        console.log(err)
+        resp.status(500).send({message:err.message})
     }
     
     
@@ -57,12 +50,8 @@ router.post('/register', async function(pet, resp){
     var direccion = pet.body.direccion
     var telefono = pet.body.telefono
 
-    if(nick&&email&&nombre&&password&&
-        apellidos&&direccion&&telefono){
-        
-
+    if(nick&&email&&nombre&&password&&apellidos&&direccion&&telefono){
         try {
-            
             const user = await userService.createUser(nick, email, nombre, password, apellidos, direccion, telefono)
             
             var mailOptions = {
@@ -80,10 +69,9 @@ router.post('/register', async function(pet, resp){
             })
             resp.status(200)
             resp.send(user)
-            console.log(user)
             
             } catch (err) {
-            resp.status(500).send(err);
+            resp.status(500).send({message:err.message});
             } 
     }
     
@@ -103,7 +91,6 @@ function isString(x) {
     else{
         try{
             const dato = await userService.readUser(id)
-            console.log(dato)
             if (dato){
                 resp.status(200)
                 resp.send(dato)
@@ -114,7 +101,7 @@ function isString(x) {
                 resp.send({mensaje: "Error: no esta en la lista"})
             }
         }catch(err){
-            resp.status(500).send(err)
+            resp.status(500).send({message:err.message})
         }
         
        
@@ -122,14 +109,34 @@ function isString(x) {
 })
 
 router.put('/users/:id',chequeaJWT, async function(pet, resp){
-    try {
-        var id = pet.params.id
-        const user = await userService.updateUser(id, pet.body)
-        resp.status(200)
-        resp.send(user)
-      } catch (err) {
-        resp.status(500).send(err)
-      }
+    var email = pet.body.email
+    var password = pet.body.password
+    var nombre = pet.body.nombre
+    var apellidos = pet.body.apellidos
+    var direccion = pet.body.direccion
+    var telefono = pet.body.telefono
+    var id = pet.params.id
+
+    if(email&&password&&nombre&&apellidos&&direccion&&telefono&&id){
+        try {
+            const user = await userService.updateUser(id, pet.body)
+            if(user){
+                resp.status(204)
+                resp.setHeader('Location', 'http://localhost:3000/users/'+id)
+                resp.send(user)
+            }else{
+                resp.status(404)
+                resp.send({mensaje: "Error: no esta en la lista"})
+            }
+            
+          } catch (err) {
+            resp.status(500).send({message:err.message})
+          }
+    }else{
+        resp.status(400)
+        resp.send({mensaje:"Error: Falta algún campo: nick, email, password, nombre, apellidos, dirección o teléfono"})
+    }
+    
     
 })
 
@@ -144,7 +151,7 @@ function chequeaJWT(pet, resp, next) {
         var campos = cabecera.split(' ')
         if (campos.length>1 && cabecera.startsWith('Bearer')) {
             var token = campos[1]
-            //TODO: con jwt-simple decodificar el token. 
+            //con jwt-simple decodificar el token. 
             var decoded = jwt.decode(token, secret)
             //si tiene éxito poner tokenOK=true 
             if(decoded) tokenOK = true
