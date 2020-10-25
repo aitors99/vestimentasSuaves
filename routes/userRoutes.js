@@ -86,19 +86,18 @@ function isString(x) {
     var id = pet.params.id
     if (!isString(id)) {
         resp.status(400)
-        resp.send({mensaje:"El dato debe ser el nick"})
+        resp.send({mensaje:"Error: El dato debe ser el nick"})
     }
     else{
         try{
             const dato = await userService.readUser(id)
-            if (dato){
+            if (dato.length!=0){
                 resp.status(200)
                 resp.send(dato)
-                console.log("Usuario " + dato.id)
             }
             else{
                 resp.status(404)
-                resp.send({mensaje: "Error: no esta en la lista"})
+                resp.send({mensaje: "Error: No esta en la lista"})
             }
         }catch(err){
             resp.status(500).send({message:err.message})

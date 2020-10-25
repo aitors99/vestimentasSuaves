@@ -7,7 +7,8 @@ const productSchema = new mongoose.Schema({
     precio: Number,
     talla: String,
     color: String,
-    marca: String
+    marca: String,
+    filePath: String
 })
 
 const Product = mongoose.model('Product', productSchema)

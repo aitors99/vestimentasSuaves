@@ -1,12 +1,13 @@
 const express = require('express')
-const Product = require('../models/product')
 const productModel = require('../models/product')
+
+const fs = require('fs')
 
 const productService = {
 
-    readProducts: async function(){
+    readProducts: async function(limit, startIndex){
         try{
-            const products = await productModel.find({})
+            const products = await productModel.find().limit(limit).skip(startIndex)
             return products
         }catch(err){
             throw new Error("Error: No se ha podido listar los productos")
@@ -15,14 +16,14 @@ const productService = {
 
     readProduct: async function(id){
         try{
-            const products = await productModel.findById(id)
-            return products
+            const product = await productModel.findById(id)
+            return product
         }catch(err){
-            throw new Error("Error: El producto no está en la lista")
+            throw new Error("Error: No se ha podido listar el producto")
         }
     },
 
-    createProduct: async function(nombre, precio, talla, color, marca){
+    createProduct: async function(nombre, precio, talla, color, marca, filePath){
         try{
             const product = new productModel()
 
@@ -31,8 +32,9 @@ const productService = {
             product.talla = talla
             product.color = color
             product.marca = marca
+            product.filePath = filePath
             product._id = null
-
+            
             await product.save()
             return product
         }catch(err){
@@ -43,6 +45,7 @@ const productService = {
     deleteProduct: async function(id){
         try{
             const product = await productModel.findByIdAndDelete(id)
+            fs.unlinkSync('./assets/'+product.filePath)
             return product
         }catch(err){
             throw new Error("Error: No se ha podido borrar el producto")
@@ -55,6 +58,15 @@ const productService = {
             return product
         }catch(err){
             throw new Error("Error: No se ha podido modificar el producto")
+        }
+    },
+
+    getLentgh: async function(){
+        try{
+            const n = await productModel.countDocuments()
+            return n
+        }catch(err){
+            throw new Error("Error: No se ha podido obtener el número de productos")
         }
     }
 }
