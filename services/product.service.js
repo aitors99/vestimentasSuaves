@@ -46,27 +46,28 @@ const productService = {
 
     deleteProduct: async function(id){
         try{
-            if(id.length==24){
-                const product = await productModel.findByIdAndDelete(id)
-                fs.unlinkSync('./assets/'+product.filePath)
-                return product
-            }else return null
+            const previous = await productModel.findById(id)
+            if(previous==null) return null
+            const product = await productModel.findByIdAndDelete(id)
+            fs.unlinkSync('./assets/'+product.filePath)
+            return product
         }catch(err){
             throw new Error("Error: No se ha podido borrar el producto")
         }
+        
+        
     },
 
     modifyProduct: async function(id, body, newName){
         try{
-            if(id.length==24){
-                const previous = await productModel.findById(id)
-                fs.unlinkSync('./assets/'+previous.filePath)
-                const product = await productModel.findByIdAndUpdate(id, body, {new:true})
-                return product
-            } else {    
-                fs.unlinkSync('./assets/'+newName)
-                return null
-            }
+            
+            const previous = await productModel.findById(id)
+            if(previous==null) return null
+            fs.unlinkSync('./assets/'+previous.filePath)
+            body.filePath = newName
+            const product = await productModel.findByIdAndUpdate(id, body, {new:true})
+            return product
+            
         }catch(err){
             fs.unlinkSync('./assets/'+newName)
             throw new Error("Error: No se ha podido modificar el producto")

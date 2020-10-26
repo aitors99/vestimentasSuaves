@@ -122,23 +122,25 @@ router.post('/products', upload.single('productImage'), chequeaJWT, async functi
 
 router.delete('/products/:id', chequeaJWT, async function(pet, resp){
     var id = pet.params.id
-    if (!isString(id)) {
+    if (id.length!=24) {
         resp.status(400)
-        resp.send({mensaje:"El dato debe ser numérico"})
+        resp.send({mensaje:"Error: El id debe ser una cadena de 24 caracteres"})
     }
     else{
         try{
             const product = await productService.deleteProduct(id)
-            if (product){
+            if (product!=null){
                 resp.status(204).send(product)
             }
             else{
                 resp.status(404)
-                resp.send({mensaje: "Error: no esta en la lista"})
+                resp.send({mensaje: "Error: No esta en la lista"})
             }
         }catch(err){
+            
             resp.status(500)
             resp.send({message:err.message})
+            
         }
     }
 })
@@ -150,28 +152,35 @@ router.put('/products/:id', upload.single('productImage'), chequeaJWT, async fun
     var color = pet.body.color
     var marca = pet.body.marca
     var id = pet.params.id
-
-    if(nombre&&precio&&talla&&color&&marca&&id){
-        try{
-            const product = await productService.modifyProduct(id, pet.body, newName)
-            if(product!=null){
-                resp.status(204)
-                resp.setHeader('Location', 'http://localhost:3000/products/'+id)
-                resp.send(product)
-            }else{
-                resp.status(404)
-                resp.send({mensaje: "Error: no esta en la lista"})
+    if(id.length==24){
+        if(nombre&&precio&&talla&&color&&marca&&id){
+            try{
+                const product = await productService.modifyProduct(id, pet.body, newName)
+                if(product!=null){
+                    resp.status(204)
+                    resp.setHeader('Location', 'http://localhost:3000/products/'+id)
+                    resp.send(product)
+                }else{
+                    resp.status(404)
+                    fs.unlinkSync('./assets/'+newName)
+                    resp.send({mensaje: "Error: no esta en la lista"})
+                }
+            }catch(err){
+                resp.status(500)
+                resp.send({message:err.message})
             }
-        }catch(err){
-            resp.status(500)
-            resp.send({message:err.message})
         }
-    }
-    else{
+        else{
+            resp.status(400)
+            fs.unlinkSync('./assets/'+newName)
+            resp.send({mensaje:"Error: Falta algún campo: nombre, precio, talla, color, marca o imagen"})
+        }
+    }else{
         resp.status(400)
         fs.unlinkSync('./assets/'+newName)
-        resp.send({mensaje:"Error: Falta algún campo: nombre, precio, talla, color, marca o imagen"})
+        resp.send({mensaje:"Error: El id debe ser una cadena de 24 caracteres"})
     }
+    
 })
 
 //Middleware: lo pondremos ANTES de procesar la petición

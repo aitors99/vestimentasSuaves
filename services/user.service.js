@@ -27,10 +27,15 @@ const userService = {
             user.apellidos = apellidos
             user.direccion = direccion
             user.telefono = telefono
-    
-            await user.save()
+            
+            const previous = await userModel.findById(nick)
 
-            return user
+            if(previous==null){
+                await user.save()
+                return user
+            }else{
+                return null
+            } 
         }catch(err){
             throw new Error("Error: No se ha podido crear el usuario")
         } 

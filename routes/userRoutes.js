@@ -53,23 +53,26 @@ router.post('/register', async function(pet, resp){
     if(nick&&email&&nombre&&password&&apellidos&&direccion&&telefono){
         try {
             const user = await userService.createUser(nick, email, nombre, password, apellidos, direccion, telefono)
-            
-            var mailOptions = {
-                from: 'vestimentas.suaves@gmail.com',
-                to: email,
-                subject: 'Usuario creado con éxito',
-                text: 'Hola ' + nombre + ', tu usuario ha sido creado correctamente. Accede con tu nick (' + nick + ') y tu contraseña. Un saludo y muchas gracias.'
-            }
-            transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                console.log(error);
-                } else {
-                console.log('Email sent: ' + info.response);
+            if(user!=null){
+                var mailOptions = {
+                    from: 'vestimentas.suaves@gmail.com',
+                    to: email,
+                    subject: 'Usuario creado con éxito',
+                    text: 'Hola ' + nombre + ', tu usuario ha sido creado correctamente. Accede con tu nick (' + nick + ') y tu contraseña. Un saludo y muchas gracias.'
                 }
-            })
-            resp.status(200)
-            resp.send(user)
-            
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                    console.log(error);
+                    } else {
+                    console.log('Email sent: ' + info.response);
+                    }
+                })
+                resp.status(200)
+                resp.send(user)
+            }else{
+                resp.status(400)
+                resp.send({mensaje:"Error: Nick inválido"})
+            }
             } catch (err) {
             resp.status(500).send({message:err.message});
             } 

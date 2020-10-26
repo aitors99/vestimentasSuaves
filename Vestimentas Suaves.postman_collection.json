@@ -1,0 +1,1354 @@
+{
+	"info": {
+		"_postman_id": "7fd71363-a393-4dc5-8c25-6a3aa6168962",
+		"name": "Vestimentas Suaves",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "http://localhost:3000/login_correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "111ffbe5-eb78-4bca-b6f8-44098d934e38",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\":\"adi\",\r\n    \"password\":\"1234\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/login_error_nick",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9cc869e-1d4d-4cb9-b39f-7c821d5b04e3",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\":\"adi2\",\r\n    \"password\":\"1234\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/login_error_password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6cb020d-c033-4a32-8f11-b8fe186daae2",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\":\"adi\",\r\n    \"password\":\"12345\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/register_correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3fa332fd-73b1-414e-8e63-b4f5a6f3cdb5",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nick\": \"admin\",\r\n    \"email\":\"aitors999@gmail.com\",\r\n    \"password\":\"admin\",\r\n    \"nombre\": \"Admin\",\r\n    \"apellidos\": \"Administración\",\r\n    \"direccion\": \"C/ Admin\",\r\n    \"telefono\": \"123456789\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/register_nick_duplicado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ddb94e0b-5d34-466b-89ed-e3375893271e",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nick\": \"admin\",\r\n    \"email\":\"aitors999@gmail.com\",\r\n    \"password\":\"admin\",\r\n    \"nombre\": \"Admin\",\r\n    \"apellidos\": \"Administración\",\r\n    \"direccion\": \"C/ Admin\",\r\n    \"telefono\": \"123456789\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/register_error_falta_campo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nick\": \"admin\",\r\n    \"email\":\"aitors999@gmail.com\",\r\n    \"password\":\"admin\",\r\n    \"nombre\": \"Admin\",\r\n    \"apellidos\": \"Administración\",\r\n    \"direccion\": \"C/ Admin\",\r\n    \"telefono\": \"123456789\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/users/usuario_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd32682c-cd3f-4878-b228-41277326fe7f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/adi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"adi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/users/usuario_no_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9fecdf7a-0dbf-4a3f-8793-bece6b396074",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(406);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/adi2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"adi2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/users/todo_correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bd7074cb-d747-45b4-a086-63fb0319a86b",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aitors999gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"nombre\": \"Aitor\",\r\n    \"apellidos\": \"Rodríguez Sanz\",\r\n    \"direccion\": \"C/ Rabasa Nº 24\",\r\n    \"telefono\": \"666433719\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/adi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"adi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/users/error_falta_campo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4856d57-8149-4efb-863a-fbdd4e51fbdf",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aitors999gmail.com\",\r\n    \"nombre\": \"Aitor\",\r\n    \"apellidos\": \"Rodríguez Sanz\",\r\n    \"direccion\": \"C/ Rabasa Nº 24\",\r\n    \"telefono\": \"666433719\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/adi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"adi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/users/usuario_no_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f4d4a513-3e0d-44c5-af67-357c4a6da6c8",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aitors999gmail.com\",\r\n    \"password\":\"1234\",\r\n    \"nombre\": \"Aitor\",\r\n    \"apellidos\": \"Rodríguez Sanz\",\r\n    \"direccion\": \"C/ Rabasa Nº 24\",\r\n    \"telefono\": \"666433719\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/adi2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"adi2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "http://localhost:3000/products_página1_limite3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "211efea4-8669-4e26-ad50-b6d1daeae081",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products?page=1&limit=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/producto_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d0c2337-57b5-47a1-9409-1e6eb27f7724",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f95aa68e192a810440d571f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f95aa68e192a810440d571f"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/producto_no_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ce51165e-b57e-43e9-a79a-7906c84ce480",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "password",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f95aa68e192a810440d571e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f95aa68e192a810440d571e"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/producto_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8277a6bc-a505-4027-95ee-6a4dc010ba0f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/5f96c4bece246e0c143c0549",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f96c4bece246e0c143c0549"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8ee14a7c8f4c0adc674322",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/producto_no_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "28883d64-4234-4eed-aa44-d75f1918b70f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/5f95ab71e192a810440d5777",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f95ab71e192a810440d5777"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8ee14a7c8f4c0adc674322",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/id_erróneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7382baa0-d35c-4bda-9b04-a028cb0adda3",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/products/5f95ab71e192a810440d577",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f95ab71e192a810440d577"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8ee14a7c8f4c0adc674322",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products_todo_correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fbb3d8e8-97f2-47aa-a231-b9689cdffa10",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "Bolso",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products_falta_campo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dbc03f2e-40b4-44d3-90bd-27253c492c54",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "Bolso",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/error_falta_campo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4148656b-b948-4fdb-a17d-000e293a4c17",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "bolso",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "precio",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f96b964cc96e31d9044a6c4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f96b964cc96e31d9044a6c4"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/producto_no_existe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e0074f61-347a-46e8-941d-50ceb37313e1",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "bolso",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f96b964cc96e31d90466666",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f96b964cc96e31d90466666"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/id_erróneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "71788319-3f6c-4a21-9fef-2dd8046ffc9f",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "bolso",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f96b964cc96e31d904666",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f96b964cc96e31d904666"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/products/todo_correcto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3b1af52f-c78d-407c-b420-b32be93b3746",
+								"exec": [
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpbiI6ImFkaSJ9.pHfeE8Zyczq4dVFkD33uTdDSAaaJP_v06DmLfxInMb4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "productImage",
+									"type": "file",
+									"src": "/C:/Users/Asus/Desktop/vestimentasSuaves/clienteFotos/ropa7.jpg"
+								},
+								{
+									"key": "nombre",
+									"value": "bolso",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "talla",
+									"value": "-",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "negro",
+									"type": "text"
+								},
+								{
+									"key": "marca",
+									"value": "stradivarius",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/products/5f96c4bece246e0c143c0549",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"5f96c4bece246e0c143c0549"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "5f8eeb1bd8b3a92cd4a325d7",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
