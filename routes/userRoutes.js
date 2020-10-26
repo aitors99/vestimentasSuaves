@@ -27,7 +27,7 @@ router.post('/login',  async function(pet, resp){
     try{
        const user = await userService.getPassword(datos.login)
 
-        if(datos.password === user.password){
+        if(user!=null && datos.password === user.password){
             var token = jwt.encode({login:datos.login}, secret)
             resp.send({mensaje:"OK", token:token})
         }else{
@@ -73,6 +73,9 @@ router.post('/register', async function(pet, resp){
             } catch (err) {
             resp.status(500).send({message:err.message});
             } 
+    }else{
+        resp.status(400)
+        resp.send({mensaje:"Error: Falta algún campo: nick, email, password, nombre, apellidos, dirección o teléfono"})
     }
     
     
@@ -91,7 +94,7 @@ function isString(x) {
     else{
         try{
             const dato = await userService.readUser(id)
-            if (dato.length!=0){
+            if (dato!=null){
                 resp.status(200)
                 resp.send(dato)
             }
@@ -119,7 +122,7 @@ router.put('/users/:id',chequeaJWT, async function(pet, resp){
     if(email&&password&&nombre&&apellidos&&direccion&&telefono&&id){
         try {
             const user = await userService.updateUser(id, pet.body)
-            if(user){
+            if(user!=null){
                 resp.status(204)
                 resp.setHeader('Location', 'http://localhost:3000/users/'+id)
                 resp.send(user)

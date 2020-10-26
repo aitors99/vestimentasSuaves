@@ -37,8 +37,6 @@ const userService = {
     },
 
     updateUser: async function(id, body){
-        console.log(id)
-        console.log(body)
         try{
             const user = await userModel.findByIdAndUpdate(id, body, {new:true})
             return user

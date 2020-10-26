@@ -16,8 +16,10 @@ const productService = {
 
     readProduct: async function(id){
         try{
-            const product = await productModel.findById(id)
-            return product
+            if(id.length==24){
+                const product = await productModel.findById(id)
+                return product
+            } else return null   
         }catch(err){
             throw new Error("Error: No se ha podido listar el producto")
         }
@@ -44,19 +46,29 @@ const productService = {
 
     deleteProduct: async function(id){
         try{
-            const product = await productModel.findByIdAndDelete(id)
-            fs.unlinkSync('./assets/'+product.filePath)
-            return product
+            if(id.length==24){
+                const product = await productModel.findByIdAndDelete(id)
+                fs.unlinkSync('./assets/'+product.filePath)
+                return product
+            }else return null
         }catch(err){
             throw new Error("Error: No se ha podido borrar el producto")
         }
     },
 
-    modifyProduct: async function(id, body){
+    modifyProduct: async function(id, body, newName){
         try{
-            const product = await productModel.findByIdAndUpdate(id, body, {new:true})
-            return product
+            if(id.length==24){
+                const previous = await productModel.findById(id)
+                fs.unlinkSync('./assets/'+previous.filePath)
+                const product = await productModel.findByIdAndUpdate(id, body, {new:true})
+                return product
+            } else {    
+                fs.unlinkSync('./assets/'+newName)
+                return null
+            }
         }catch(err){
+            fs.unlinkSync('./assets/'+newName)
             throw new Error("Error: No se ha podido modificar el producto")
         }
     },
