@@ -29,7 +29,7 @@ router.post('/login',  async function(pet, resp){
 
         if(user!=null && datos.password === user.password){
             var token = jwt.encode({login:datos.login}, secret)
-            resp.send({mensaje:"OK", token:token})
+            resp.send({mensaje:"OK", token:token, user: datos.login})
         }else{
             resp.status(401).send({mensaje:"Credenciales inválidas"})
         }

@@ -18,10 +18,12 @@
   "homepage": "https://github.com/aitors99/vestimentasSuaves#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jwt-simple": "^0.5.6",
     "moment": "^2.29.1",
     "mongoose": "^5.10.9",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.14"
   }

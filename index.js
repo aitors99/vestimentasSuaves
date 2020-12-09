@@ -2,12 +2,15 @@ var express = require('express')
 var mongoose = require('mongoose')
 var userRouter = require('./routes/userRoutes')
 var productRouter = require('./routes/productsRoutes')
-
-
+var cors = require('cors')
+var morgan = require('morgan')
 
 var bp = require('body-parser')
 var app = express()
 app.use(bp.json())
+app.use(morgan("tiny"))
+
+app.use(cors({exposedHeaders: ['Location']})) //añadir parámetro 
 
 
 

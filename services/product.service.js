@@ -1,7 +1,8 @@
 const express = require('express')
 const productModel = require('../models/product')
 
-const fs = require('fs')
+//const fs = require('fs')
+const { isValidObjectId } = require('mongoose')
 
 const productService = {
 
@@ -14,18 +15,7 @@ const productService = {
         }
     },
 
-    readProduct: async function(id){
-        try{
-            if(id.length==24){
-                const product = await productModel.findById(id)
-                return product
-            } else return null   
-        }catch(err){
-            throw new Error("Error: No se ha podido listar el producto")
-        }
-    },
-
-    createProduct: async function(nombre, precio, talla, color, marca, filePath){
+    createProduct: async function(nombre, precio, talla, color, marca){
         try{
             const product = new productModel()
 
@@ -34,10 +24,11 @@ const productService = {
             product.talla = talla
             product.color = color
             product.marca = marca
-            product.filePath = filePath
             product._id = null
-            
-            await product.save()
+            await product.save(function(err,room) {
+                console.log(room);
+             });
+
             return product
         }catch(err){
             throw new Error("Error: No se ha podido crear el producto")
@@ -49,7 +40,7 @@ const productService = {
             const previous = await productModel.findById(id)
             if(previous==null) return null
             const product = await productModel.findByIdAndDelete(id)
-            fs.unlinkSync('./assets/'+product.filePath)
+            //fs.unlinkSync('./assets/'+product.filePath)
             return product
         }catch(err){
             throw new Error("Error: No se ha podido borrar el producto")
@@ -63,13 +54,13 @@ const productService = {
             
             const previous = await productModel.findById(id)
             if(previous==null) return null
-            fs.unlinkSync('./assets/'+previous.filePath)
+            //fs.unlinkSync('./assets/'+previous.filePath)
             body.filePath = newName
             const product = await productModel.findByIdAndUpdate(id, body, {new:true})
             return product
             
         }catch(err){
-            fs.unlinkSync('./assets/'+newName)
+            //fs.unlinkSync('./assets/'+newName)
             throw new Error("Error: No se ha podido modificar el producto")
         }
     },
