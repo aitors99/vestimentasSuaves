@@ -41,6 +41,28 @@ router.post('/login',  async function(pet, resp){
     
 })
 
+router.delete('/users/:id', chequeaJWT, async function(pet, resp){
+    var id = pet.params.id
+   
+    try{
+        const user = await userService.deleteUser(id)
+        if (user!=null){
+            resp.status(204).send(user)
+        }
+        else{
+            resp.status(404)
+            resp.send({mensaje: "Error: El usuario no existe"})
+        }
+    }catch(err){
+        
+        resp.status(500)
+        resp.send({message:err.message})
+        console.log(err.message)
+        
+    }
+    
+})
+
 router.post('/register', async function(pet, resp){
     var nick = pet.body.nick
     var email = pet.body.email

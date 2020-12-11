@@ -57,6 +57,17 @@ const userService = {
         }catch(err){
             throw new Error("Error: No se ha podido leer el usuario")
         }
+    },
+
+    deleteUser: async function(id){
+        try{
+            const previous = await userModel.findById(id)
+            if(previous==null) return null
+            const user = await userModel.findByIdAndDelete(id)
+            return user
+        }catch(err){
+            throw new Error("Error: No se ha podido borrar el usuario")
+        }
     }
 
 }
