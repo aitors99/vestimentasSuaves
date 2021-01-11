@@ -15,6 +15,15 @@ const productService = {
         }
     },
 
+    readProduct: async function(id){
+        try{
+            const product = await productModel.findById(id)
+            return product
+        }catch(err){
+            throw new Error("Error: No se ha podido leer el producto")
+        }
+    },
+
     createProduct: async function(nombre, precio, talla, color, marca){
         try{
             const product = new productModel()
